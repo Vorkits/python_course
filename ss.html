@@ -30,6 +30,54 @@
             font-family: 'Lacquer';
             font-size: 45px;
         }
+        
+        .hh {
+            font-size: 25px;
+            position: absolute;
+            margin-left: 30%;
+            font-family: 'Arial';
+            color: grey;
+        }
+        
+        .timetext {
+            position: absolute;
+            font-family: 'Lacquer';
+            font-size: 45px;
+            margin-left: 80%;
+        }
+        
+        .time {
+            position: absolute;
+            font-family: 'Lacquer';
+            font-size: 45px;
+            margin-left: 89%;
+        }
+        
+        .loh {
+            position: absolute;
+            font-family: 'Lacquer';
+            font-size: 150px;
+            margin-left: 10%;
+            color: brown;
+        }
+        
+        .loh2 {
+            position: absolute;
+            font-family: 'Lacquer';
+            font-size: 150px;
+            margin-left: 10%;
+            margin-top: 20%;
+            color: darkblue;
+        }
+        
+        .loh3 {
+            position: absolute;
+            font-family: 'Lacquer';
+            font-size: 150px;
+            margin-left: 40%;
+            margin-top: 11%;
+            color: aqua;
+        }
     </style>
 </head>
 
@@ -38,13 +86,19 @@
     <img class="ra" src="123.jpg" id="da"></img>
     <div class="fa" id="fa"></div>
     <div id="score" class="score">OCHKA:</div>
+    <div class="hh">Зацензурь больше матов за минуту</div>
+    <div class="timetext">Time:</div>
+    <div class="time" id="time">5</div>
+    <div class="loh" id="loh">ТЫ ЛОХ</div>
+    <div class="loh2" id="loh2">ТЫ ЛОХ</div>
+    <div class="loh3" id="loh3">ТЫ ЛОХ</div>
 
 
     <script>
         var a = document.getElementById('da')
         var b = document.getElementById('fa')
         var score = document.getElementById('score')
-
+        var colors = ['black', 'pink', 'yellow', 'red', 'blue', 'green']
 
         var mat = ['Блять', 'Матьебал', '667', 'Пэздэц'];
         var mat_len = mat.length
@@ -59,6 +113,12 @@
         var wid = mas[0]
         var scores = 0;
         var hei = mas[1]
+        loh1 = document.getElementById('loh')
+        loh2 = document.getElementById('loh2')
+        loh3 = document.getElementById('loh3')
+        loh1.style.display = 'none'
+        loh2.style.display = 'none'
+        loh3.style.display = 'none'
 
         document.addEventListener('keydown', (ev) => {
             const keyName = event.key;
@@ -66,25 +126,21 @@
 
 
             if (keyName == 'w') {
-                if (up_down_press.indexOf('w') == -1) {
-                    up_down_press.push('w')
-                }
+
                 sample_down('w')
 
 
             }
-            if (keyName == 's' && up_down_press.length == 0) {
+            if (keyName == 's') {
 
                 sample_down('s')
             }
             if (keyName == 'a') {
-                if (left_press.indexOf('a') == -1) {
-                    left_press.push('a')
-                }
+
                 sample_down('a')
 
             }
-            if (keyName == 'd' && up_down_press.length == 0) {
+            if (keyName == 'd') {
 
                 sample_down('d')
             }
@@ -93,12 +149,13 @@
         }, false);
 
 
-        document.addEventListener('keyup', (event) => {
+
+        /*  document.addEventListener('keyup', (event) => {
             const keyName = event.key;
             if (keyName == 'w') {
 
                 sample_up('w')
-                up_down_press.pop()
+
 
             }
             if (keyName == 's') {
@@ -108,13 +165,13 @@
             if (keyName == 'a') {
 
                 sample_up('a')
-                left_press.pop()
+
             }
             if (keyName == 'd') {
                 sample_up('d')
             }
         }, false);
-
+*/
 
 
 
@@ -131,55 +188,57 @@
         }
         async function sample_down(key) {
 
-            if (key == 'w' && current_up_down > -80) {
+            if (key == 'w' && current_up_down > 0) {
 
-
-                if (speed_up < 10) {
-                    speed_up += 4
-                } else {
-                    speed_up += 2
+                var f = speed_up + 12
+                for (speed_up; speed_up <= f; speed_up++) {
+                    current_up_down -= speed_up
+                    a.style.marginTop = current_up_down + 'px'
+                    await delay(1);
                 }
+                speed_up = 0
 
-                current_up_down -= speed_up
-                a.style.marginTop = current_up_down + 'px'
-                await delay(1);
+
             }
-            if (key == 's' && current_up_down < screen.height - 220) {
+            if (key == 's' && current_up_down < screen.height - 270) {
 
-                if (speed_up < 10) {
-                    speed_up += 4
-                } else {
-                    speed_up += 2
+                var f = speed_up + 12
+                for (speed_up; speed_up <= f; speed_up++) {
+                    current_up_down += speed_up
+                    a.style.marginTop = current_up_down + 'px'
+                    await delay(1);
                 }
-                current_up_down += speed_up
-                a.style.marginTop = current_up_down + 'px'
-                await delay(1);
+                speed_up = 0
+
             }
             if (key == 'a' && current_left_right > -60) {
 
-                if (speed_left < 10) {
-                    speed_left += 4
-                } else {
-                    speed_left += 2
+                var f = speed_left + 12
+                for (speed_left; speed_left <= f; speed_left++) {
+                    current_left_right -= speed_left
+                    a.style.marginLeft = current_left_right + 'px'
+                    await delay(1);
                 }
-                current_left_right -= speed_left
-                a.style.marginLeft = current_left_right + 'px'
-                await delay(1);
+                speed_left = 0
+
+
+
             }
             if (key == 'd' && current_left_right < screen.width - 100) {
 
-                if (speed_left < 10) {
-                    speed_left += 4
-                } else {
-                    speed_left += 2
+                var f = speed_left + 12
+                for (speed_left; speed_left <= f; speed_left++) {
+                    current_left_right += speed_left
+                    a.style.marginLeft = current_left_right + 'px'
+                    await delay(1);
                 }
-                current_left_right += speed_left
-                a.style.marginLeft = current_left_right + 'px'
-                await delay(1);
+                speed_left = 0
+
+
             }
             var check1 = current_up_down - hei
             var check2 = current_left_right - wid
-            if ((check1 < 35 && check1 > -35) && (check2 < 35 && check2 > -35)) {
+            if ((check1 < 60 && check1 > -60) && (check2 < 60 && check2 > -60)) {
 
                 scores++
                 score.innerHTML = 'OCHKA:' + scores
@@ -193,7 +252,7 @@
         async function sample_up(key) {
             var check1 = current_up_down - hei
             var check2 = current_left_right - wid
-            if ((check1 < 35 && check1 > -35) && (check2 < 35 && check2 > -35)) {
+            if ((check1 < 60 && check1 > -60) && (check2 < 60 && check2 > -60)) {
 
                 scores++
                 score.innerHTML = 'OCHKA:' + scores
@@ -279,6 +338,7 @@
             console.log(ss)
             var random_mat = mat[ss]
             el.innerHTML = random_mat
+            el.style.color = colors[getRandomIntInclusive(0, colors.length - 1)]
             var w = getRandomIntInclusive(0, screen.width - 100)
             el.style.marginLeft = w
             var h = getRandomIntInclusive(0, screen.height - 200)
@@ -292,6 +352,28 @@
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
         }
+
+        function timer() {
+            var obj = document.getElementById('time');
+            obj.innerHTML--;
+
+            if (obj.innerHTML == 0) {
+                alert('Hello');
+                setInterval(function() {
+                    loh1.style.display = 'flex'
+                    loh3.style.display = 'flex'
+                    loh2.style.display = 'flex'
+                }, 1000);
+                setInterval(function() {
+                    loh1.style.display = 'none'
+                    loh3.style.display = 'none'
+                    loh2.style.display = 'none'
+                }, 2000);
+            } else {
+                setTimeout(timer, 1000);
+            }
+        }
+        setTimeout(timer, 1000);
     </script>
 </body>
 
