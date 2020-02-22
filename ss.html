@@ -1,43 +1,258 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .ra {
+            width: 120px;
+            height: 120px;
+            background-color: black;
+            margin-top: 400px;
+            position: absolute;
+        }
+        
+        .fa {
+            width: 120px;
+            height: 120px;
+            font-size: 34px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bolder;
+            position: absolute;
+            text-align: center;
+        }
+        
+        .da {
+            position: absolute;
+        }
+    </style>
 </head>
 
 <body>
 
-    <p id="text">Hello</p>
-    <input type="button" onclick="msg()">
+    <img class="ra" id="da"></img>
+    <div class="fa" id="fa">Блять</div>
+    <div id="score" class="da"></div>
+
+
     <script>
-        function min(a, b) {
-            if (a < b) {
-                return a
-            } else if (b > a) {
-                return b
+        var a = document.getElementById('da')
+        var b = document.getElementById('fa')
+        var score = document.getElementById('score')
+        var mas = randomstay(b)
+        var wid = mas[0]
+        var hei = mas[1]
+        console.log(wid, hei)
+        var speed_up = 0
+        var speed_left = 0
+        var current_up_down = 400
+        var current_left_right = 10
+        var up_down_press = []
+        var left_press = []
+
+
+        document.addEventListener('keydown', (ev) => {
+            const keyName = event.key;
+            B = 0
+
+
+            if (keyName == 'w') {
+                if (up_down_press.indexOf('w') == -1) {
+                    up_down_press.push('w')
+                }
+                sample_down('w')
+
+
             }
-            return 'Равно'
+            if (keyName == 's' && up_down_press.length == 0) {
+
+                sample_down('s')
+            }
+            if (keyName == 'a') {
+                if (left_press.indexOf('a') == -1) {
+                    left_press.push('a')
+                }
+                sample_down('a')
+
+            }
+            if (keyName == 'd' && up_down_press.length == 0) {
+
+                sample_down('d')
+            }
+
+
+        }, false);
+
+
+        document.addEventListener('keyup', (event) => {
+            const keyName = event.key;
+            if (keyName == 'w') {
+
+                sample_up('w')
+                up_down_press.pop()
+
+            }
+            if (keyName == 's') {
+                sample_up('s')
+
+            }
+            if (keyName == 'a') {
+
+                sample_up('a')
+                left_press.pop()
+            }
+            if (keyName == 'd') {
+                sample_up('d')
+            }
+        }, false);
+
+
+
+
+
+
+
+
+        async function delay(delayInms) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(2);
+                }, delayInms);
+            });
         }
-        var a = document.getElementById('text')
-        a.style.display = "none"
+        async function sample_down(key) {
 
-        function color() {
-            a.style.color = "black"
-            a.style.display = "flex"
-            a.style.display = "none"
+            if (key == 'w' && current_up_down > -80) {
+
+
+                a
+                speed_up += 2
+                current_up_down -= speed_up
+                a.style.marginTop = current_up_down + 'px'
+                await delay(15);
+            }
+            if (key == 's' && current_up_down < screen.height - 220) {
+
+                speed_up += 2
+                current_up_down += speed_up
+                a.style.marginTop = current_up_down + 'px'
+                await delay(15);
+            }
+            if (key == 'a' && current_left_right > -60) {
+
+                speed_left += 2
+                current_left_right -= speed_left
+                a.style.marginLeft = current_left_right + 'px'
+                await delay(15);
+            }
+            if (key == 'd' && current_left_right < screen.width - 100) {
+
+                speed_left += 2
+                current_left_right += speed_left
+                a.style.marginLeft = current_left_right + 'px'
+                await delay(15);
+            }
+            var check1 = current_up_down - hei
+            var check2 = current_left_right - wid
+            if ((check1 < 30 && check1 > -30) && (check2 < 30 && check2 > -30)) {
+                b.style.display = 'none'
+                score.innerHTML = 'score:1'
+            }
+
+        }
+        async function sample_up(key) {
+            var check1 = current_up_down - hei
+            var check2 = current_left_right - wid
+            if ((check1 < 30 && check1 > -30) && (check2 < 30 && check2 > -30)) {
+                b.style.display = 'none'
+                score.innerHTML = 'score:1'
+            }
+            if (key == 'w') {
+
+                for (speed_up; speed_up > 0; speed_up--) {
+
+                    current_up_down -= speed_up
+                    if (current_up_down <= -80) {
+                        speed_up = 0
+                        current_up_down = -80
+                        break
+                    }
+
+
+                    a.style.marginTop = current_up_down + 'px'
+                    await delay(15);
+
+
+                }
+            }
+            if (key == 's') {
+                for (speed_up; speed_up > 0; speed_up--) {
+
+                    current_up_down += speed_up
+
+                    if (current_up_down >= screen.height - 220) {
+                        speed_up = 0
+                        current_up_down = screen.height - 220
+                        break
+                    }
+
+                    a.style.marginTop = current_up_down + 'px'
+                    await delay(15);
+
+
+                }
+            }
+            if (key == 'a') {
+                for (speed_left; speed_left > 0; speed_left--) {
+
+                    current_left_right -= speed_left
+
+
+                    if (current_left_right <= -60) {
+                        speed_left = 0
+                        current_left_right = -60
+                        break
+                    }
+                    a.style.marginLeft = current_left_right + 'px'
+                    await delay(15);
+
+
+                }
+            }
+            if (key == 'd') {
+                for (speed_left; speed_left > 0; speed_left--) {
+
+                    current_left_right += speed_left
+                    if (current_left_right >= screen.width - 100) {
+                        speed_left = 0
+                        current_left_right = screen.width - 100
+                        break
+                    }
+
+
+                    a.style.marginLeft = current_left_right + 'px'
+                    await delay(15);
+
+
+                }
+            }
         }
 
-        function msg() {
-
-
-            a.style.color = "red"
-            a.style.display = "flex"
-            setTimeout(color, 1000)
+        function randomstay(el) {
+            w = getRandomIntInclusive(0, screen.width - 100)
+            el.style.marginLeft = w
+            h = getRandomIntInclusive(0, screen.height - 200)
+            el.style.marginTop = h
+            var mas = [w, h]
+            return mas
         }
 
-        a.style.color = "blue"
+        function getRandomIntInclusive(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
+        }
     </script>
 </body>
 

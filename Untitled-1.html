@@ -20,6 +20,7 @@
 
 
     <script>
+        var kk = 0
         var leftspeed = 0
         var a = document.getElementById('da')
         document.addEventListener('keydown', (ev) => {
@@ -33,22 +34,43 @@
             }
             async function sample() {
 
+
                 a.src = "14.gif"
-                await delay(100)
+
                 var current = 400
                 var speed = -16
 
-                var keys = ['w', 'W', 'Ц']
+                var keys = ['w', 'W', 'ц']
+                var keys2 = ['s', 'S', 'ы']
                 console.log(keys.indexOf(keyName))
-                if (keys.indexOf(keyName) == false) {
-                    for (var i = current; i <= 400; i += speed) {
-                        a.style.marginTop = i + 'px'
-                        leftspeed += 2
-                        a.style.marginLeft = leftspeed + 'px'
-                        speed += 0.5
-                        await delay(10);
-                    }
 
+                if (keys.indexOf(keyName) != -1) {
+                    if (kk == 0) {
+                        kk = 1
+                        for (var i = current; i <= 400; i += speed) {
+                            a.style.marginTop = i + 'px'
+                            leftspeed += 2
+                            a.style.marginLeft = leftspeed + 'px'
+                            speed += 0.5
+                            await delay(10);
+                        }
+                        kk = 0
+
+                    }
+                }
+                if (keys2.indexOf(keyName) != -1) {
+                    if (kk == 0) {
+                        kk = 1
+                        for (var i = current; i <= 400; i += speed) {
+                            a.style.marginTop = i + 'px'
+                            leftspeed -= 2
+                            a.style.marginLeft = leftspeed + 'px'
+                            speed += 0.5
+                            await delay(10);
+                        }
+                        kk = 0
+
+                    }
                 }
 
             }
