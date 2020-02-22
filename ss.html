@@ -9,7 +9,8 @@
 
 <body>
 
-
+    <p id="text">Hello</p>
+    <input type="button" onclick="msg()">
     <script>
         function min(a, b) {
             if (a < b) {
@@ -19,7 +20,24 @@
             }
             return 'Равно'
         }
-        alert(min(2, 2))
+        var a = document.getElementById('text')
+        a.style.display = "none"
+
+        function color() {
+            a.style.color = "black"
+            a.style.display = "flex"
+            a.style.display = "none"
+        }
+
+        function msg() {
+
+
+            a.style.color = "red"
+            a.style.display = "flex"
+            setTimeout(color, 1000)
+        }
+
+        a.style.color = "blue"
     </script>
 </body>
 
