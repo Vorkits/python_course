@@ -16,7 +16,8 @@
 </head>
 
 <body>
-    <img class="ra" src="14.gif" id="da"></img>
+
+    <img class="ra" id="da"></img>
     <script>
         var current_stay = 300
         var speed = 3
@@ -31,10 +32,12 @@
         }
         currenty = 10
         async function sample() {
-            await delay(1000);
+            a.src = "14.gif"
+            await delay(100)
             var current = 400
             var speed = -16
             var leftspeed = 0
+
             while (true) {
                 for (var i = current; i <= 400; i += speed) {
                     a.style.marginTop = i + 'px'

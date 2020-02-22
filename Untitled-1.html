@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .ra {
+            width: 120px;
+            height: 120px;
+            background-color: blue;
+            margin-top: 400px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <img class="ra" id="da"></img>
+
+
+    <script>
+        var leftspeed = 0
+        var a = document.getElementById('da')
+        document.addEventListener('keydown', (ev) => {
+            const keyName = ev.key;
+            async function delay(delayInms) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(1);
+                    }, delayInms);
+                });
+            }
+            async function sample() {
+
+                a.src = "14.gif"
+                await delay(100)
+                var current = 400
+                var speed = -16
+
+
+
+                if (keyName == 'w') {
+                    for (var i = current; i <= 400; i += speed) {
+                        a.style.marginTop = i + 'px'
+                        leftspeed += 2
+                        a.style.marginLeft = leftspeed + 'px'
+                        speed += 0.5
+                        await delay(10);
+                    }
+
+                }
+                alert(keyName)
+            }
+            sample();
+        }, false);
+    </script>
+</body>
+
+</html>
