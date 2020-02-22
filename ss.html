@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Lacquer|Odibee+Sans&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -11,6 +12,7 @@
             background-color: black;
             margin-top: 400px;
             position: absolute;
+            z-index: 3;
         }
         
         .fa {
@@ -23,34 +25,40 @@
             text-align: center;
         }
         
-        .da {
+        .score {
             position: absolute;
+            font-family: 'Lacquer';
+            font-size: 45px;
         }
     </style>
 </head>
 
 <body>
 
-    <img class="ra" id="da"></img>
-    <div class="fa" id="fa">Блять</div>
-    <div id="score" class="da"></div>
+    <img class="ra" src="123.jpg" id="da"></img>
+    <div class="fa" id="fa"></div>
+    <div id="score" class="score">OCHKA:</div>
 
 
     <script>
         var a = document.getElementById('da')
         var b = document.getElementById('fa')
         var score = document.getElementById('score')
-        var mas = randomstay(b)
-        var wid = mas[0]
-        var hei = mas[1]
-        console.log(wid, hei)
+
+
+        var mat = ['Блять', 'Матьебал', '667', 'Пэздэц'];
+        var mat_len = mat.length
+
         var speed_up = 0
         var speed_left = 0
         var current_up_down = 400
         var current_left_right = 10
         var up_down_press = []
         var left_press = []
-
+        var mas = randomstay(b)
+        var wid = mas[0]
+        var scores = 0;
+        var hei = mas[1]
 
         document.addEventListener('keydown', (ev) => {
             const keyName = event.key;
@@ -126,48 +134,75 @@
             if (key == 'w' && current_up_down > -80) {
 
 
-                a
-                speed_up += 2
+                if (speed_up < 10) {
+                    speed_up += 4
+                } else {
+                    speed_up += 2
+                }
+
                 current_up_down -= speed_up
                 a.style.marginTop = current_up_down + 'px'
-                await delay(15);
+                await delay(1);
             }
             if (key == 's' && current_up_down < screen.height - 220) {
 
-                speed_up += 2
+                if (speed_up < 10) {
+                    speed_up += 4
+                } else {
+                    speed_up += 2
+                }
                 current_up_down += speed_up
                 a.style.marginTop = current_up_down + 'px'
-                await delay(15);
+                await delay(1);
             }
             if (key == 'a' && current_left_right > -60) {
 
-                speed_left += 2
+                if (speed_left < 10) {
+                    speed_left += 4
+                } else {
+                    speed_left += 2
+                }
                 current_left_right -= speed_left
                 a.style.marginLeft = current_left_right + 'px'
-                await delay(15);
+                await delay(1);
             }
             if (key == 'd' && current_left_right < screen.width - 100) {
 
-                speed_left += 2
+                if (speed_left < 10) {
+                    speed_left += 4
+                } else {
+                    speed_left += 2
+                }
                 current_left_right += speed_left
                 a.style.marginLeft = current_left_right + 'px'
-                await delay(15);
+                await delay(1);
             }
             var check1 = current_up_down - hei
             var check2 = current_left_right - wid
-            if ((check1 < 30 && check1 > -30) && (check2 < 30 && check2 > -30)) {
-                b.style.display = 'none'
-                score.innerHTML = 'score:1'
+            if ((check1 < 35 && check1 > -35) && (check2 < 35 && check2 > -35)) {
+
+                scores++
+                score.innerHTML = 'OCHKA:' + scores
+                mas = randomstay(b)
+                wid = mas[0]
+
+                hei = mas[1]
             }
 
         }
         async function sample_up(key) {
             var check1 = current_up_down - hei
             var check2 = current_left_right - wid
-            if ((check1 < 30 && check1 > -30) && (check2 < 30 && check2 > -30)) {
-                b.style.display = 'none'
-                score.innerHTML = 'score:1'
+            if ((check1 < 35 && check1 > -35) && (check2 < 35 && check2 > -35)) {
+
+                scores++
+                score.innerHTML = 'OCHKA:' + scores
+                mas = randomstay(b)
+                wid = mas[0]
+
+                hei = mas[1]
             }
+
             if (key == 'w') {
 
                 for (speed_up; speed_up > 0; speed_up--) {
@@ -240,9 +275,13 @@
         }
 
         function randomstay(el) {
-            w = getRandomIntInclusive(0, screen.width - 100)
+            var ss = getRandomIntInclusive(0, mat_len - 1)
+            console.log(ss)
+            var random_mat = mat[ss]
+            el.innerHTML = random_mat
+            var w = getRandomIntInclusive(0, screen.width - 100)
             el.style.marginLeft = w
-            h = getRandomIntInclusive(0, screen.height - 200)
+            var h = getRandomIntInclusive(0, screen.height - 200)
             el.style.marginTop = h
             var mas = [w, h]
             return mas
