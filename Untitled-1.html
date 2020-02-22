@@ -38,9 +38,9 @@
                 var current = 400
                 var speed = -16
 
-
-
-                if (keyName == 'w') {
+                var keys = ['w', 'W', 'Ц']
+                console.log(keys.indexOf(keyName))
+                if (keys.indexOf(keyName) == false) {
                     for (var i = current; i <= 400; i += speed) {
                         a.style.marginTop = i + 'px'
                         leftspeed += 2
@@ -50,7 +50,7 @@
                     }
 
                 }
-                alert(keyName)
+
             }
             sample();
         }, false);
